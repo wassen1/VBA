@@ -1,0 +1,55 @@
+Sub Change_exp_date_click()
+    
+    Sheets("Licens").Unprotect "*****"
+    Sheets("Licens").Range("A1:A2").Locked = False
+    
+    On Error GoTo 0
+    Dim MyPassword As String
+    Dim LoginFlag As Boolean
+    MyPassword = "***"
+    
+    LoginFlag = False
+    Do While LoginFlag = False
+        MyPasswordInput = InputBox("Please enter password to continue.", "Enter Password")
+        
+        If MyPasswordInput = MyPassword Then
+            LoginFlag = True
+        ElseIf MyPasswordInput = vbNullString Then
+            Sheets("Licens").Range("A1:A2").Locked = True
+            Sheets("Licens").Protect Password:="*****"
+            Exit Sub
+        ElseIf MyPasswordInput <> MyPassword Then
+            MsgBox "Sorry, Incorrect Login Details"
+        Else
+            Sheets("Licens").Range("A1:A2").Locked = True
+            Sheets("Licens").Protect Password:="*****"
+            Exit Sub
+        
+        End If
+    Loop
+    
+   
+    
+    Dim MyNewDate As Variant
+    Dim dateCheck As Boolean
+    
+    
+        MyNewDate = InputBox("Enter new exp date (yyyy/mm/dd)", "NEW EXP DATE")
+        
+        dateCheck = IsDate(MyNewDate)
+        If dateCheck = False Then
+            MsgBox "Sorry, your date seem to be illegal. Please try again!"
+            Sheets("Licens").Range("A1:A2").Locked = True
+            Sheets("Licens").Protect Password:="*****"
+            Exit Sub
+        End If
+        
+        'Cells(1, 1) = CDate(MyNewDate)
+        Cells(2, 1) = Format(MyNewDate, "yyyy/mm/dd")
+ 
+        
+        
+            
+    Sheets("Licens").Range("A1:A2").Locked = True
+    Sheets("Licens").Protect Password:="*****"
+ End Sub
